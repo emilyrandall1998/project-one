@@ -1,0 +1,55 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin: 0
+}
+
+.grid {
+  display: flex;
+  flex-direction: row;
+  border: 0.5px solid black;
+  width: 650px;
+  height: 650px;
+  flex-wrap: wrap;
+}
+
+.cell {
+  /* border: 1px solid black; */
+  font-size: 25px;
+}
+
+.scooby {
+  background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQsy_GmTSyXdRzfGQCmvgZfwA-P2prhxr1Skg&usqp=CAU');
+  background-size: contain;
+}
+
+/* .obstLeft {
+
+}
+
+.obstRight {
+
+}
+
+.villainLeft {
+
+}
+
+.villainRight {
+
+}
+
+.MMLeft {
+
+}
+
+.MMRight {
+
+} */
