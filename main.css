@@ -1,5 +1,8 @@
+@import url('https://fonts.googleapis.com/css2?family=Shadows+Into+Light&display=swap');
+
 * {
   box-sizing: border-box;
+  font-family: 'Shadows Into Light', cursive;
 }
 
 body {
@@ -14,9 +17,13 @@ body {
 }
 
 .title {
-  text-align: center;
+  display: flex;
   width: 650px; 
-  background: rgba(76, 122, 175, 0.3);
+  height: 300px;
+  background-image: url('https://i.pinimg.com/originals/79/64/87/796487e4cc8569f44434d204fb0482b0.png');
+  background-size: 50%;
+  background-position: center;
+  background-repeat: no-repeat;
   color: white;
 }
 .stats {
@@ -24,8 +31,9 @@ body {
   flex-direction: row;
   justify-content: space-around;
   align-content: space-around;
+  align-items: center;
   width: 650px; 
-  background: rgba(76, 122, 175, 0.3);
+  height: 40px;
   color: white;
 }
 .bottom {
@@ -34,7 +42,16 @@ body {
   justify-content: space-around;
   align-content: space-around;
   width: 650px; 
-  background: rgba(76, 122, 175, 0.3);
+  margin-bottom: 10px;
+}
+
+button {
+margin: 5px;
+background-color: rgb(230, 230, 109);
+color: purple;
+margin: 10px;
+border-radius: 20%;
+border: orange solid 0.5px;
 }
 
 .grid {
@@ -57,13 +74,13 @@ body {
   background-size: cover;
 }
 
-.OOBLeft, .OOBRight {
-  background-color: white !important;
-}
-
-/* .OOBRight {
+/* .OOBLeft {
   background-color: white !important;
 } */
+
+/* .OOBRight {
+  background-color: white !important; */
+/* } */
 
 /* .obstLeft {
 

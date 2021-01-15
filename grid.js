@@ -33,8 +33,7 @@ cells[scooby].classList.add('scooby')
 //? to change the colour of the different grid sections
 for (let i = 0; i <= cells.length; i++) {
   if (i >= 0 && i <= 15) {
-    cells[i].style.backgroundImage = "url('https://upload.wikimedia.org/wikipedia/en/thumb/d/d8/Scooby-Snacks-F.jpg/220px-Scooby-Snacks-F.jpg')" /*'#e08b3e'*/
-    cells[i].style.backgroundSize = '100%'
+    cells[i].style.backgroundColor = '#ffc04c'
   } else if (i >= 16 && i <= 95) {
     cells[i].style.backgroundColor = '#d3d3d3'
   } else if (i >= 96 && i <= 111) {
@@ -46,7 +45,15 @@ for (let i = 0; i <= cells.length; i++) {
   }
 
   if (outOfBoundsLeft.includes(i)) {
-    cells[i].style.backgroundColor = 'white'
+    cells[i].style.background = 'none'
+    // cells[i].style.backgroundColor = '#24529c'
+    // cells[i].style.color = '#24529c'
+  }
+
+  if (outOfBoundsRight.includes(i)) {
+    cells[i].style.background = 'none'
+    // cells[i].style.backgroundColor = '#24529c'
+    // cells[i].style.color = '#24529c'
   }
 }
 
