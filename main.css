@@ -8,15 +8,41 @@ body {
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  margin: 0
+  margin: 0;
+  background-image: url('https://www.cartoonbrew.com/wp-content/uploads/2020/06/kurinsky_lead_house.jpg');
+  background-size: cover;
+}
+
+.title {
+  text-align: center;
+  width: 650px; 
+  background: rgba(76, 122, 175, 0.3);
+  color: white;
+}
+.stats {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-content: space-around;
+  width: 650px; 
+  background: rgba(76, 122, 175, 0.3);
+  color: white;
+}
+.bottom {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-content: space-around;
+  width: 650px; 
+  background: rgba(76, 122, 175, 0.3);
 }
 
 .grid {
   display: flex;
   flex-direction: row;
-  border: 0.5px solid black;
+  /* border: 0.5px solid black; */
   width: 650px;
-  height: 650px;
+  height: 600px;
   flex-wrap: wrap;
 }
 
@@ -26,9 +52,18 @@ body {
 }
 
 .scooby {
-  background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQsy_GmTSyXdRzfGQCmvgZfwA-P2prhxr1Skg&usqp=CAU');
-  background-size: contain;
+  /* background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQsy_GmTSyXdRzfGQCmvgZfwA-P2prhxr1Skg&usqp=CAU'); */
+  background-image: url('https://static.wikia.nocookie.net/cartoon-network-city-fanon/images/5/53/Scooby-Doo.png/revision/latest/scale-to-width-down/340?cb=20180308174244');
+  background-size: cover;
 }
+
+.OOBLeft, .OOBRight {
+  background-color: white !important;
+}
+
+/* .OOBRight {
+  background-color: white !important;
+} */
 
 /* .obstLeft {
 
