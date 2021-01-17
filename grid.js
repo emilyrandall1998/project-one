@@ -30,7 +30,7 @@ for (let index = 0; index < width * height; index++) {
   grid.appendChild(cell)
   cells.push(cell)
   //* number each cell by its index.
-  cell.innerHTML = index
+  // cell.innerHTML = index
   //* set the width and height of cells
   cell.style.width = `${100 / width}%`
   cell.style.height = `${100 / height}%`
@@ -46,12 +46,18 @@ for (let i = 0; i <= cells.length; i++) {
     cells[i].style.backgroundColor = '#ffc04c'
   } else if (i >= 16 && i <= 95) {
     cells[i].style.backgroundColor = '#d3d3d3'
+    cells[i].style.borderTop = '1px solid white'
+    cells[i].style.borderBottom = '1px solid white'
   } else if (i >= 96 && i <= 111) {
-    cells[i].style.backgroundColor = '#90EE90'
+    cells[i].style.backgroundImage = 'url(\'https://lh3.googleusercontent.com/proxy/p4QIF77ww6pye-gE7kyi2sDrLm3oaxhN2gzh_4DQQtio1hMao6ja_Ui_XNr6vQM2YNJFHsx2DnZPfjxaZClm8ygMww\')'
+    cells[i].style.backgroundSize = 'cover'
   } else if (i >= 112 && i <= 191) {
     cells[i].style.backgroundColor = '#b19cd9'
+    cells[i].style.borderTop = '1px solid yellow'
+    cells[i].style.borderBottom = '1px solid yellow'
   } else if (i >= 192 && i <= 207) {
-    cells[i].style.backgroundColor = '#90EE90'
+    cells[i].style.backgroundImage = 'url(\'https://lh3.googleusercontent.com/proxy/p4QIF77ww6pye-gE7kyi2sDrLm3oaxhN2gzh_4DQQtio1hMao6ja_Ui_XNr6vQM2YNJFHsx2DnZPfjxaZClm8ygMww\')'
+    cells[i].style.backgroundSize = 'cover'
   }
   if (rightVilStart.includes(i)) {
     cells[i].classList.add('villainsFromRight') //? adding the villainsFromRight to their starting positions 
@@ -62,54 +68,72 @@ for (let i = 0; i <= cells.length; i++) {
   //* to make the out of bound zones invisible
   if (outOfBoundsLeft.includes(i)) {
     cells[i].style.background = 'none' 
+    cells[i].style.border = 'none'
   }
   if (outOfBoundsRight.includes(i)) {
     cells[i].style.background = 'none'
+    cells[i].style.border = 'none'
   }
 }
 // console.log(rightVilStart)
 // console.log(leftVilStart)
 // console.log(outOfBoundsRight)
 // console.log(outOfBoundsLeft)
-
+function moveRightVil(villainPosition) {
+  let mappedVillains = villainPosition.map((cell) => {
+    cell - 1
+  })
+  console.log(mappedVillains)
+  setInterval(() => {
+  if (cells.classList.contains('villainsFromRight')) {
+    cells[rightVilStart].classList.remove('villainsFromRight')
+    mappedVillains.classList.add('villainsFromRight')
+  }
+  }, 1000)
+}
 
 button.addEventListener('click', () => {
+  //? click start, the timer begins, if timer runs out lose a life and put scooby back at the start 
+  //! need to remove the eventlistener and re add? or maybe set the timer back to 30 and carry on? 
   if (intervalID) return 
   intervalID = setInterval(() => {
-    if (time >= 0) {
+    if (time > 0) {
       timeTotal.innerHTML = time
       time--
-    } else {
+      moveRightVil()
+    } else if (time === 0) {
+      // timeTotal.innerHTML = 'JINKIES! YOU\'RE OUT OF TIME!'
+      livesTotal.innerHTML = lives - 1
+      cells[scooby].classList.remove('scooby')
+      cells[199].classList.add('scooby')
+      timeTotal.innerHTML = 30
       clearInterval(intervalID)
+      //! need to remove the event listener and start the interval/click action again
+      // button.removeEventListener()
     }
+    win()
       }, 1000)
-  //! currently what this function does is remove the first vilFromRight class and then break?
-  // let vilFromRight = cells[vilFromRight] //* keep this, then maybe say if cells contain the vilFromRight indexes, vilFromRight.map(x ==> x - 1)?
+//!BELOW ------------------------------------------------------------------------------------->
+//! indexOf?
+//! essentially, what I want to happen when the start button is clicked, is that in 1 second intervals, all the villainsFromRight - 1 index from their current position (using array.map?) simultaneously, and this repeats until the out of bounds LEFT index contains a classList('villainsFromRight'), at which point the interval starts from the top again, and this goes on in a continuous loop until the timer runs out (so for 30 seconds - does this need to go within the timer interval then?)
+//! I think I need to make the villains move in a function and then add that to the 30000 setInterval timer, rather than putting the whole thing inside it
+      // setInterval(() => {
+      //   if (grid.classList.contains('villainsFromRight')) {
+      //     cells.indexOf(rightVilStart).classList.remove('villainsFromRight')
+      //     mappedVillains.classList.add('villainsFromRight')
+      //   }
+      // }, 1000)
+// //* copy of original attempt to return to 
+//       setInterval(() => {
+//           if (rightVilStart.classList.contains('villainsFromRight')) {
+//             rightVilStart.classList.remove('villainsFromRight')
+//             moveRightVil()
+//             mappedVillains.classList.add('villainsFromRight')
+//           }
+//       }, 1000)
+ 
 
-  // setInterval(() => {
-  //   // const leftBound = cells[leftBound]
-  //   grid.forEach((cell) => {
-  //     if (cell.classList.contains('villainsFromRight')) { //? if cells.includes(rightVilStart) --> then need to map?
-  //       cell.classList.remove('villainsFromRight')
-  //       grid[indexOf(cell)].classList.add('villainsFromRight')
-  //     }
-  //     // if (cell[leftBound].classList.contains('villainsFromRight')) {
-  //     //   cell.classList.remove('villainsFromRight')
-  //     // }
-  //   })
-
-  //   console.log(cell)
-  //   // for (let i = 190; i >= 130; i--) {
-  //   //  if (cells[i].classList.contains('villainsFromRight')) {
-  //   //    console.log(cells[i])
-  //   //     // cells[i].classList.remove('villainsFromRight')
-  //   //     // cells[i] -= 1
-  //   //     // cells[i].classList.add('villainsFromRight') //! Do I need to map the rightVilStart array?! Shouldn't have to, that literally just to add the classList
-  //   //   }
-  //   // }
-  // }, 1000)
-
-//? to allow the character to move around inside the grid's borders and only escape in DZ2
+//? to allow scooby to move around inside the grid's borders and only escape in DZ2
 document.addEventListener('keyup', (event) => {
   const key = event.key
   const leftBound = [1, 97, 113, 129, 145, 161, 177, 193]
@@ -140,18 +164,7 @@ document.addEventListener('keyup', (event) => {
 
 
 
-
-
-// cells[villainsFromRight].classList.remove('villainsFromRight') //! you are here !!!
-// villainsFromRight += 1
-// cells[villainsFromRight].classList.add('villainsFromRight')
-
-//? the character wins the game 
-function win() {
-  const safeZone = cells[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
-  if (cells[safeZone].classList.contains('scooby'))
-  alert('YOU WIN')
-}
+//! IGNORE BELOW FOR NOW! ----------------------------------------------------------------->
 
 // function start() {
 //   setInterval(() => {
@@ -165,6 +178,31 @@ function win() {
 //   button.addEventListener('click', () => {
 //   start()
 //   })
+
+//? function for the character to lose 
+function lose() {
+  if (cells[scooby].classList.contains('villainsFromRight') || cells[scooby].classList.contains('villainsFromLeft')) {
+    cells[scooby].classList.remove('scooby')
+    livesTotal.innerHTML = lives - 1
+    cells[199].classList.add('scooby')
+  } else if (lives === 0) {
+    console.log('Zoinks, you lost! Refresh the page to play again!')
+  }
+}
+
+//? the character wins the game 
+function win() {
+  const safeZone = cells[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]
+  if (safeZone.classList.contains('scooby')) {
+  score += 100
+  cells[scooby].classList.remove('scooby')
+  cells[199].classList.add('scooby')
+  }
+  if (score === 500) {
+    cells[scooby].classList.remove('scooby')
+    console.log('You win! Treat yourself to a Scooby Snack!')
+  }
+}
 
 
 
