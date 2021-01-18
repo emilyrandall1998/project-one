@@ -64,7 +64,7 @@ border: orange solid 0.5px;
   display: flex;
   flex-direction: row;
   /* border: 0.5px solid black; */
-  width: 650px;
+  width: 600px;
   height: 600px;
   flex-wrap: wrap;
 }
