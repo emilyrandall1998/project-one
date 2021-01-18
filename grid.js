@@ -12,6 +12,8 @@ let rightVilStart = [126, 121, 116, 156, 151, 146, 190, 185, 180] //! trying to 
 //? creating an array of villains coming in from left to right
 let leftVilStart = [129, 132, 135, 138, 141, 161, 164, 167, 170, 173]
 //? these two variables below are the out of bound cells where the avatar cannot go (with no background)
+let rightMystStartFront = [45, 41, 37, 33, 77, 73, 69, 65]
+let rightMystStartBack = [46, 42, 38, 34, 78, 74, 70, 66]
 const outOfBoundsLeft = [0, 16, 32, 48, 64, 80, 96, 112, 128, 144, 160, 176, 192]
 const outOfBoundsRight = [15, 31, 47, 63, 79, 95, 111, 127, 143, 159, 175, 191, 207]
 let lives = 3
@@ -45,9 +47,9 @@ for (let i = 0; i <= cells.length; i++) {
   if (i >= 0 && i <= 15) {
     cells[i].style.backgroundColor = '#ffc04c'
   } else if (i >= 16 && i <= 95) {
-    cells[i].style.backgroundColor = '#d3d3d3'
-    cells[i].style.borderTop = '1px solid white'
-    cells[i].style.borderBottom = '1px solid white'
+    cells[i].style.backgroundColor = 'white'
+    cells[i].style.borderTop = '1px solid #d3d3d3'
+    cells[i].style.borderBottom = '1px solid #d3d3d3'
   } else if (i >= 96 && i <= 111) {
     cells[i].style.backgroundColor = '#84e09d'
   } else if (i >= 112 && i <= 191) {
@@ -62,6 +64,12 @@ for (let i = 0; i <= cells.length; i++) {
   }
   if (leftVilStart.includes(i)) {
     cells[i].classList.add('villainsFromLeft')
+  }
+  if (rightMystStartFront.includes(i)) {
+    cells[i].classList.add('mystFromRightFront')
+  }
+  if (rightMystStartBack.includes(i)) {
+    cells[i].classList.add('mystFromRightBack')
   }
   //* to make the out of bound zones invisible
   if (outOfBoundsLeft.includes(i)) {
@@ -78,7 +86,7 @@ for (let i = 0; i <= cells.length; i++) {
 // console.log(outOfBoundsRight)
 // console.log(outOfBoundsLeft)
 function moveRightVil() {
-   const villainRightID = setInterval(() => {
+  const villainRightID = setInterval(() => {
     rightVilStart.forEach((villain, i) => {
       if (villain === 112 || villain === 144 || villain === 176) {
         console.log('reached end')
@@ -89,8 +97,8 @@ function moveRightVil() {
         cells[villain].classList.remove('villainsFromRight')
         rightVilStart[i] -= 1
         cells[villain -= 1].classList.add('villainsFromRight')
-        console.log(villain)
-        console.log(rightVilStart)
+        // console.log(villain)
+        // console.log(rightVilStart)
       }
     })
   }, 2000)
@@ -111,11 +119,39 @@ function moveLeftVil() {
     })
   }, 1500)
 }
+//! only one works at a time - por qué
+function moveRightMyst() {
+  const mystRightID = setInterval(() => {
+    rightMystStartFront.forEach((machine, i) => {
+      if (machine === 32 || machine === 64) {
+        cells[machine].classList.remove('mystFromRightFront')
+        rightMystStartFront[i] += 14
+        cells[machine += 14].classList.add('mystFromRightFront')
+      } else {
+        cells[machine].classList.remove('mystFromRightFront')
+        rightMystStartFront[i] -= 1
+        cells[machine -= 1].classList.add('mystFromRightFront')
+      }
+    })
+    rightMystStartBack.forEach((machine, i) => {
+      if (machine === 32 || machine === 64) {
+        cells[machine].classList.remove('mystFromRightBack')
+        rightMystStartBack[i] += 14
+        cells[machine += 14].classList.add('mystFromRightBack')
+      } else {
+        cells[machine].classList.remove('mystFromRightBack')
+        rightMystStartBack[i] -= 1
+        cells[machine -= 1].classList.add('mystFromRightBack')
+      }
+    })
+  }, 1000)
+}
 
 button.addEventListener('click', () => {
   moveRightVil()
   moveLeftVil()
-  win()
+  moveRightMyst()
+
   //? click start, the timer begins, if timer runs out lose a life and put scooby back at the start 
   //! need to remove the eventlistener and re add? or maybe set the timer back to 30 and carry on? 
   //! just swapped the if statements around and that made it worse
@@ -128,12 +164,15 @@ button.addEventListener('click', () => {
       cells[199].classList.add('scooby')
       time += 30
       clearInterval(intervalID)
+      clearInterval(villainRightID)
+      clearInterval(villainLeftID)
       //! need to remove the event listener and start the interval/click action again
       // button.removeEventListener() //? <-- to make sure the interval restarts immediately without having to click start again?
     } else if (time >= 0) {
       timeTotal.innerHTML = time
       time--
     }
+    win()
   }, 1000)
   //!BELOW ------------------------------------------------------------------------------------->
   //! indexOf?
@@ -187,8 +226,6 @@ function lose() {
     livesTotal.innerHTML = lives - 1
     cells[199].classList.add('scooby')
   } else if (lives === 0) {
-    clearInterval(villainRightID)
-    clearInterval(villainLeftID)
     console.log('Zoinks, you lost! Refresh the page to play again!')
   }
 }
@@ -196,10 +233,11 @@ function lose() {
 //? the character wins the game 
 function win() {
   const safeZone = cells[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]
-  if (safeZone.classList.contains('scooby')) {
-    score += 100
-    cells[scooby].classList.remove('scooby')
-    cells[199].classList.add('scooby')
+  if (time > 0 && safeZone.classList.contains('scooby')) {
+    console.log('u safe')
+    // score += 100
+    // cells[scooby].classList.remove('scooby')
+    // cells[199].classList.add('scooby')
   }
   if (score === 500) {
     cells[scooby].classList.remove('scooby')

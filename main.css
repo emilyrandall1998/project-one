@@ -75,7 +75,7 @@ border: orange solid 0.5px;
 }
 
 .scooby {
-  background-image: url('https://static.wikia.nocookie.net/cartoon-network-city-fanon/images/5/53/Scooby-Doo.png/revision/latest/scale-to-width-down/340?cb=20180308174244') !important;
+  background-image: url('./images/Scooby-Doo.png') !important;
   background-size: cover;
 }
 
@@ -87,5 +87,21 @@ border: orange solid 0.5px;
 .villainsFromRight {
   background-image: url('https://webstockreview.net/images/scooby-doo-clipart-villain-15.png');
   background-size: cover;
+}
+
+.mystFromRightFront {
+  background-image: url('./images/MMLogo\ Left.png');
+  background-size: 100%;
+  background-repeat: no-repeat;
+}
+
+.mystFromRightBack {
+  background-image: url('./images/MMLogo\ Right.png');
+  background-size: 100%;
+  background-repeat: no-repeat;
+}
+
+.mystFromLeft {
+background-color: orange;
 }
 
