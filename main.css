@@ -101,7 +101,15 @@ border: orange solid 0.5px;
   background-repeat: no-repeat;
 }
 
-.mystFromLeft {
-background-color: orange;
+.mystFromLeftFront {
+  background-image: url('./images/MMFront.png');
+  background-size: 100%;
+  background-repeat: no-repeat;
+}
+
+.mystFromLeftBack {
+  background-image: url('./images/MMBack.png');
+  background-size: 100%;
+  background-repeat: no-repeat;
 }
 

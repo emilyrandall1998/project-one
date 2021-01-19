@@ -14,6 +14,8 @@ let leftVilStart = [129, 132, 135, 138, 141, 161, 164, 167, 170, 173]
 //? these two variables below are the out of bound cells where the avatar cannot go (with no background)
 let rightMystStartFront = [45, 41, 37, 33, 77, 73, 69, 65]
 let rightMystStartBack = [46, 42, 38, 34, 78, 74, 70, 66]
+let leftMystStartFront = [17, 20, 24, 28, 49, 52, 56, 60, 81, 84, 88, 92]
+let leftMystStartBack =[16, 19, 23, 27, 48, 51, 55, 59, 80, 83, 87, 91]
 const outOfBoundsLeft = [0, 16, 32, 48, 64, 80, 96, 112, 128, 144, 160, 176, 192]
 const outOfBoundsRight = [15, 31, 47, 63, 79, 95, 111, 127, 143, 159, 175, 191, 207]
 let lives = 3
@@ -71,6 +73,12 @@ for (let i = 0; i <= cells.length; i++) {
   if (rightMystStartBack.includes(i)) {
     cells[i].classList.add('mystFromRightBack')
   }
+  if (leftMystStartFront.includes(i)) {
+    cells[i].classList.add('mystFromLeftFront')
+  }
+  if (leftMystStartBack.includes(i)) {
+    cells[i].classList.add('mystFromLeftBack')
+  }
   //* to make the out of bound zones invisible
   if (outOfBoundsLeft.includes(i)) {
     cells[i].style.background = 'none'
@@ -119,7 +127,7 @@ function moveLeftVil() {
     })
   }, 1500)
 }
-//! only one works at a time - por qué
+
 function moveRightMyst() {
   const mystRightID = setInterval(() => {
     rightMystStartFront.forEach((machine, i) => {
@@ -147,10 +155,38 @@ function moveRightMyst() {
   }, 1000)
 }
 
+function moveLeftMyst() {
+  const mystLeftID = setInterval(() => {
+    leftMystStartFront.forEach((machine, i) => {
+      if (machine === 31 || machine === 63 || machine === 95) {
+        cells[machine].classList.remove('mystFromLeftFront')
+        leftMystStartFront[i] -= 14
+        cells[machine -= 14].classList.add('mystFromLeftFront')
+      } else {
+        cells[machine].classList.remove('mystFromLeftFront')
+        leftMystStartFront[i] += 1
+        cells[machine += 1].classList.add('mystFromLeftFront')
+      }
+    })
+    leftMystStartBack.forEach((machine, i) => {
+      if (machine === 31 || machine === 65 || machine === 95) {
+        cells[machine].classList.remove('mystFromLeftBack')
+        leftMystStartBack[i] -= 14
+        cells[machine -= 14].classList.add('mystFromLeftBack')
+      } else {
+        cells[machine].classList.remove('mystFromLeftBack')
+        leftMystStartBack[i] += 1
+        cells[machine += 1].classList.add('mystFromLeftBack')
+      }
+    })
+  }, 1000)
+}
+
 button.addEventListener('click', () => {
   moveRightVil()
   moveLeftVil()
   moveRightMyst()
+  moveLeftMyst()
 
   //? click start, the timer begins, if timer runs out lose a life and put scooby back at the start 
   //! need to remove the eventlistener and re add? or maybe set the timer back to 30 and carry on? 
