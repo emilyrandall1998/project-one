@@ -12,7 +12,7 @@ body {
   align-items: center;
   flex-direction: column;
   margin: 0;
-  background-image: url('https://www.cartoonbrew.com/wp-content/uploads/2020/06/kurinsky_lead_house.jpg');
+  background-image: url('./images/Scooby\ Doo\ Background.jpg');
   background-size: cover;
 }
 
@@ -20,7 +20,7 @@ body {
   display: flex;
   width: 650px; 
   height: 300px;
-  background-image: url('https://i.pinimg.com/originals/79/64/87/796487e4cc8569f44434d204fb0482b0.png');
+  background-image: url('./images/SD\ Title.png');
   background-size: 50%;
   background-position: center;
   background-repeat: no-repeat;
@@ -78,38 +78,43 @@ border: orange solid 0.5px;
   background-image: url('./images/Scooby-Doo.png') !important;
   background-size: cover;
 }
+.shaggy {
+  background-image: url('./images/Shaggy.png') !important;
+  background-size: cover;
+}
 
 .villainsFromLeft {
-  background-image: url('https://webstockreview.net/images/clipart-face-scooby-doo-16.png');
+  background-image: url('./images/VF\ Left.png');
   background-size: cover;
 }
-
 .villainsFromRight {
-  background-image: url('https://webstockreview.net/images/scooby-doo-clipart-villain-15.png');
+  background-image: url('./images/VF\ Right.png');
   background-size: cover;
 }
-
 .mystFromRightFront {
   background-image: url('./images/MMLogo\ Left.png');
   background-size: 100%;
   background-repeat: no-repeat;
 }
-
 .mystFromRightBack {
   background-image: url('./images/MMLogo\ Right.png');
   background-size: 100%;
   background-repeat: no-repeat;
 }
-
 .mystFromLeftFront {
   background-image: url('./images/MMFront.png');
   background-size: 100%;
   background-repeat: no-repeat;
 }
-
 .mystFromLeftBack {
   background-image: url('./images/MMBack.png');
   background-size: 100%;
+  background-repeat: no-repeat;
+}
+.leftFlower {
+  background-image: url('./images/MM\ Flower.png');
+  background-size: cover;
+  background-position: center;
   background-repeat: no-repeat;
 }
 

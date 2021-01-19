@@ -14,14 +14,15 @@ let leftVilStart = [129, 132, 135, 138, 141, 161, 164, 167, 170, 173]
 //? these two variables below are the out of bound cells where the avatar cannot go (with no background)
 let rightMystStartFront = [45, 41, 37, 33, 77, 73, 69, 65]
 let rightMystStartBack = [46, 42, 38, 34, 78, 74, 70, 66]
-let leftMystStartFront = [17, 20, 24, 28, 49, 52, 56, 60, 81, 84, 88, 92]
-let leftMystStartBack =[16, 19, 23, 27, 48, 51, 55, 59, 80, 83, 87, 91]
+let leftMystStartFront = [20, 24, 28, 52, 56, 60, 84, 88, 92]
+let leftMystStartBack =[19, 23, 27, 51, 55, 59, 83, 87, 91]
+let leftMystFlower = [16, 31, 48, 63, 80, 95]
 const outOfBoundsLeft = [0, 16, 32, 48, 64, 80, 96, 112, 128, 144, 160, 176, 192]
 const outOfBoundsRight = [15, 31, 47, 63, 79, 95, 111, 127, 143, 159, 175, 191, 207]
 let lives = 3
 let score = 0
 let time = 30
-let intervalID = 0
+let timerID = 0
 scoreTotal.innerHTML = score
 livesTotal.innerHTML = lives
 timeTotal.innerHTML = time
@@ -34,7 +35,7 @@ for (let index = 0; index < width * height; index++) {
   grid.appendChild(cell)
   cells.push(cell)
   //* number each cell by its index.
-  // cell.innerHTML = index
+  cell.innerHTML = index
   //* set the width and height of cells
   cell.style.width = `${100 / width}%`
   cell.style.height = `${100 / height}%`
@@ -49,7 +50,7 @@ for (let i = 0; i <= cells.length; i++) {
   if (i >= 0 && i <= 15) {
     cells[i].style.backgroundColor = '#ffc04c'
   } else if (i >= 16 && i <= 95) {
-    cells[i].style.backgroundColor = 'white'
+    cells[i].style.backgroundColor = '#f5f5f5'
     cells[i].style.borderTop = '1px solid #d3d3d3'
     cells[i].style.borderBottom = '1px solid #d3d3d3'
   } else if (i >= 96 && i <= 111) {
@@ -79,6 +80,9 @@ for (let i = 0; i <= cells.length; i++) {
   if (leftMystStartBack.includes(i)) {
     cells[i].classList.add('mystFromLeftBack')
   }
+  if (leftMystFlower.includes(i)) {
+    cells[i].classList.add('leftFlower')
+  }
   //* to make the out of bound zones invisible
   if (outOfBoundsLeft.includes(i)) {
     cells[i].style.background = 'none'
@@ -97,7 +101,7 @@ function moveRightVil() {
   const villainRightID = setInterval(() => {
     rightVilStart.forEach((villain, i) => {
       if (villain === 112 || villain === 144 || villain === 176) {
-        console.log('reached end')
+        // console.log('reached end')
         cells[villain].classList.remove('villainsFromRight')
         rightVilStart[i] += 14
         cells[villain += 14].classList.add('villainsFromRight')
@@ -179,41 +183,55 @@ function moveLeftMyst() {
         cells[machine += 1].classList.add('mystFromLeftBack')
       }
     })
+    leftMystFlower.forEach((machine, i) => {
+      if (machine === 31 || machine === 65 || machine === 95) {
+        cells[machine].classList.remove('leftFlower')
+        leftMystFlower[i] -= 14
+        cells[machine -= 14].classList.add('leftFlower')
+      } else {
+        cells[machine].classList.remove('leftFlower')
+        leftMystFlower[i] += 1
+        cells[machine += 1].classList.add('leftFlower')
+      }
+    })
   }, 1000)
 }
 
-button.addEventListener('click', () => {
+function movePieces() {
   moveRightVil()
   moveLeftVil()
   moveRightMyst()
   moveLeftMyst()
+  lose()
+}
 
+button.addEventListener('click', () => {
   //? click start, the timer begins, if timer runs out lose a life and put scooby back at the start 
   //! need to remove the eventlistener and re add? or maybe set the timer back to 30 and carry on? 
   //! just swapped the if statements around and that made it worse
-  if (intervalID) return
-  intervalID = setInterval(() => {
+  if (timerID) return
+  const timerID = setInterval(() => {
     if (time === 0) {
       // timeTotal.innerHTML = 'JINKIES! YOU\'RE OUT OF TIME!'
       livesTotal.innerHTML = lives - 1
       cells[scooby].classList.remove('scooby')
-      cells[199].classList.add('scooby')
+      cells[199].classList.add('shaggy')
       time += 30
-      clearInterval(intervalID)
+      clearInterval(timerID)
       clearInterval(villainRightID)
       clearInterval(villainLeftID)
+      clearInterval(mystLeftID)
+      clearInterval(mystRightID)
       //! need to remove the event listener and start the interval/click action again
       // button.removeEventListener() //? <-- to make sure the interval restarts immediately without having to click start again?
     } else if (time >= 0) {
       timeTotal.innerHTML = time
       time--
+      movePieces()
     }
-    win()
   }, 1000)
-  //!BELOW ------------------------------------------------------------------------------------->
-  //! indexOf?
-  //! essentially, what I want to happen when the start button is clicked, is that in 1 second intervals, all the villainsFromRight - 1 index from their current position (using array.map?) simultaneously, and this repeats until the out of bounds LEFT index contains a classList('villainsFromRight'), at which point the interval starts from the top again, and this goes on in a continuous loop until the timer runs out (so for 30 seconds - does this need to go within the timer interval then?)
-  //! I think I need to make the villains move in a function and then add that to the 30000 setInterval timer, rather than putting the whole thing inside it
+  //! BELOW ------------------------------------------------------------------------------------->
+  //! essentially, what I want to happen is the villains and mysteryobjects move in a continuous loop until the timer runs out (so for 30 seconds - does this need to go within the timer interval then?)
 
 
   //? to allow scooby to move around inside the grid's borders and only escape in DZ2
@@ -243,15 +261,6 @@ button.addEventListener('click', () => {
 
 })
 
-
-
-
-
-//! IGNORE BELOW FOR NOW! ----------------------------------------------------------------->
-
-
-//! group all the functions that move pieces into one movepieces function (function within a function)
-
 // //? game interval of 30 seconds - do i need to nest everything inside this?
 // //? the start button function sets off: the event listener for the KEYS (not the click), the villains moving, the mystery machines driving
 
@@ -260,6 +269,8 @@ function lose() {
   if (cells[scooby].classList.contains('villainsFromRight') || cells[scooby].classList.contains('villainsFromLeft')) {
     cells[scooby].classList.remove('scooby')
     livesTotal.innerHTML = lives - 1
+    clearInterval(timerID)
+    button.removeEventListener('click', () => {})
     cells[199].classList.add('scooby')
   } else if (lives === 0) {
     console.log('Zoinks, you lost! Refresh the page to play again!')
@@ -271,9 +282,9 @@ function win() {
   const safeZone = cells[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]
   if (time > 0 && safeZone.classList.contains('scooby')) {
     console.log('u safe')
-    // score += 100
-    // cells[scooby].classList.remove('scooby')
-    // cells[199].classList.add('scooby')
+    score += 100
+    cells[scooby].classList.remove('scooby')
+    cells[199].classList.add('shaggy')
   }
   if (score === 500) {
     cells[scooby].classList.remove('scooby')
