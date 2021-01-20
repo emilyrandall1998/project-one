@@ -32,6 +32,8 @@ scoreTotal.innerHTML = score
 livesTotal.innerHTML = lives
 timeTotal.innerHTML = time
 
+console.log(cells[outOfBoundsRight])
+
 //? create the grid
 for (let index = 0; index < width * height; index++) {
   //* generate each element
@@ -250,7 +252,7 @@ function moveCharacter() {
 
 function resetChar() {
   cells[scooby].classList.remove('scooby')
-  scooby = 199
+  scooby = 200
   cells[scooby].classList.add('scooby')
 }
 
@@ -264,15 +266,22 @@ function loseLife() {
       clearInterval(loseLifeInterval)
       time = 30
       timeTotal.innerHTML = `${time}`
+    } else if (((scooby >= 17 && scooby <= 94) && !(cells[scooby].classList.contains('mystFromLeftFront') || cells[scooby].classList.contains('mystFromLeftBack') || cells[scooby].classList.contains('leftFlower')))) { //! cells[outOfBoundsLeft] is not valid ? - need to add that if scooby enters the out of bounds zone also lose a life but it won't accept if cells[outOfBoundsLeft/Right].classList.contains('scooby')
+      console.log('lose a life')
+      livesTotal.innerHTML = lives -= 1
+      resetChar()
+      clearInterval(loseLifeInterval)
+      time = 30
+      timeTotal.innerHTML = `${time}`
     } else if (lives === 0) {
-      alert('Zoinks, you lost! Refresh the page to play again!')
+      alert('Zoinks, you lost! Click \'ok\' to play again!')
       gameOver()
   }
   }, 500)
 }
 
 function gameOver() {
-  if (lives === 0 || (lives === 0 && time === 0)) { //! AM CHANGING THIS FROM || TO &&
+  if (lives === 0 || (lives === 0 && time === 0)) { //! AM CHANGING THIS FROM || TO && ?
     // console.log('GAME OVER')
     // document.removeEventListener('keyup', function(event))
     clearInterval(mystRightID)
@@ -312,7 +321,7 @@ function win() {
 //! --------------------------------------HERE-------------------------------------------->
 function moveWithVanLeft() {
   moveWithVanLeftInterval = setInterval(() => {
-    if (((scooby >= 17 && scooby <= 30) || (scooby >= 41 && scooby <= 62) || (scooby >= 81 && scooby <= 94)) && (cells[scooby].classList.contains('mystFromLeftFront') || cells[scooby].classList.contains('mystFromLeftBack') || cells[scooby].classList.contains('leftFlower')))  {
+    if (((scooby >= 17 && scooby <= 30) || (scooby >= 41 && scooby <= 62) || (scooby >= 81 && scooby <= 94)) && (cells[scooby].classList.contains('mystFromLeftFront') || cells[scooby].classList.contains('mystFromLeftBack') || cells[scooby].classList.contains('leftFlower')))  { //! it only wirks for the front of the van, not the flower or the back of the van 
       cells[scooby].classList.remove('scooby')
       scooby += 1
       cells[scooby].classList.add('scooby') 
@@ -342,8 +351,6 @@ start.addEventListener('click', () => {
       win()
     } else {
       gameOver()
-      console.log('out of time')
-      console.log(time)
       livesTotal.innerHTML = lives - 1
       cells[scooby].classList.remove('scooby')
       time = 30 
