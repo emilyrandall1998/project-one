@@ -117,4 +117,7 @@ border: orange solid 0.5px;
   background-position: center;
   background-repeat: no-repeat;
 }
+.safeZone {
+  background-color: #ffc04c;
+}
 
