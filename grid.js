@@ -16,7 +16,7 @@ let leftVilStart = [129, 132, 135, 138, 141, 161, 164, 167, 170, 173]
 let rightMystStartFront = [45, 41, 37, 33, 77, 73, 69, 65]
 let rightMystStartBack = [46, 42, 38, 34, 78, 74, 70, 66]
 let leftMystStartFront = [20, 24, 28, 52, 56, 60, 84, 88, 92]
-let leftMystStartBack =[19, 23, 27, 51, 55, 59, 83, 87, 91]
+let leftMystStartBack = [19, 23, 27, 51, 55, 59, 83, 87, 91]
 let leftMystFlower = [16, 31, 48, 63, 80, 95]
 const outOfBoundsLeft = [0, 16, 32, 48, 64, 80, 96, 112, 128, 144, 160, 176, 192]
 const outOfBoundsRight = [15, 31, 47, 63, 79, 95, 111, 127, 143, 159, 175, 191, 207]
@@ -176,7 +176,7 @@ function moveLeftMyst() {
         cells[machine].classList.remove('mystFromLeftFront')
         leftMystStartFront[i] += 1
         cells[machine += 1].classList.add('mystFromLeftFront')
-      } 
+      }
     })
     leftMystStartBack.forEach((machine, i) => {
       if (machine === 31 || machine === 63 || machine === 95) {
@@ -198,7 +198,7 @@ function moveLeftMyst() {
         cells[machine].classList.remove('leftFlower')
         leftMystFlower[i] += 1
         cells[machine += 1].classList.add('leftFlower')
-      } 
+      }
     })
   }, 1000)
 }
@@ -222,30 +222,30 @@ function movePieces() {
 // // }
 
 function moveCharacter() {
-    //? to allow scooby to move around inside the grid's borders and only escape in DZ2
-    document.addEventListener('keyup', (event) => {
-      const key = event.key
-      const leftBound = [1, 97, 113, 129, 145, 161, 177, 193]
-      const rightBound = [14, 110, 126, 142, 158, 174, 190, 206]
-      // console.log(rightBound)
-      if (key === 'ArrowRight' && !(rightBound.includes(scooby))) {
-        cells[scooby].classList.remove('scooby')
-        scooby += 1
-        cells[scooby].classList.add('scooby')
-      } else if (key === 'ArrowLeft' && !(leftBound.includes(scooby))) {
-        cells[scooby].classList.remove('scooby')
-        scooby -= 1
-        cells[scooby].classList.add('scooby')
-      } else if (key === 'ArrowDown' && !(scooby + width >= width * height)) {
-        cells[scooby].classList.remove('scooby')
-        scooby += width
-        cells[scooby].classList.add('scooby')
-      } else if (key === 'ArrowUp' && !(scooby < width)) {
-        cells[scooby].classList.remove('scooby')
-        scooby -= width
-        cells[scooby].classList.add('scooby')
-      }
-    })
+  //? to allow scooby to move around inside the grid's borders and only escape in DZ2
+  document.addEventListener('keyup', (event) => {
+    const key = event.key
+    const leftBound = [1, 97, 113, 129, 145, 161, 177, 193]
+    const rightBound = [14, 110, 126, 142, 158, 174, 190, 206]
+    // console.log(rightBound)
+    if (key === 'ArrowRight' && !(rightBound.includes(scooby))) {
+      cells[scooby].classList.remove('scooby')
+      scooby += 1
+      cells[scooby].classList.add('scooby')
+    } else if (key === 'ArrowLeft' && !(leftBound.includes(scooby))) {
+      cells[scooby].classList.remove('scooby')
+      scooby -= 1
+      cells[scooby].classList.add('scooby')
+    } else if (key === 'ArrowDown' && !(scooby + width >= width * height)) {
+      cells[scooby].classList.remove('scooby')
+      scooby += width
+      cells[scooby].classList.add('scooby')
+    } else if (key === 'ArrowUp' && !(scooby < width)) {
+      cells[scooby].classList.remove('scooby')
+      scooby -= width
+      cells[scooby].classList.add('scooby')
+    }
+  })
 }
 
 function resetChar() {
@@ -274,30 +274,27 @@ function loseLife() {
     } else if (lives === 0) {
       gameOver()
       alert('Zoinks, you lost! Click \'ok\' to play again!')
-  }
+    }
   }, 100)
 }
 
 function gameOver() {
-    clearInterval(mystRightID)
-    clearInterval(mystLeftID)
-    clearInterval(villainLeftID)
-    clearInterval(villainRightID)
-    time = 30
-    lives = 3
-    score = 0
-    timeTotal.innerHTML = `${time}`
-    livesTotal.innerHTML = `${lives}`
-    scoreTotal.innerHTML = `${score}`
-    console.log(lives)
-    clearInterval(intervalID)
-    resetChar()
-
+  clearInterval(mystRightID)
+  clearInterval(mystLeftID)
+  clearInterval(villainLeftID)
+  clearInterval(villainRightID)
+  time = 30
+  lives = 3
+  score = 0
+  timeTotal.innerHTML = `${time}`
+  livesTotal.innerHTML = `${lives}`
+  scoreTotal.innerHTML = `${score}`
+  clearInterval(intervalID)
+  resetChar()
 }
 
 //? the character wins the game 
 function win() {
-  // const safeZone = cells[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]
   if (time >= 0 && cells[scooby].classList.contains('safeZone')) {
     console.log('u safe')
     score += 100
@@ -314,12 +311,11 @@ function win() {
   // console.log(safeZone)
 }
 
-//! --------------------------------------HERE-------------------------------------------->
 function moveWithVanLeft() {
   moveWithVanLeftInterval = setInterval(() => {
-    if (((scooby >= 17 && scooby <= 30) || (scooby >= 41 && scooby <= 62) || (scooby >= 81 && scooby <= 94)) && cells[scooby].classList.contains('mystFromLeftFront') 
-    || ((scooby >= 17 && scooby <= 30) || (scooby >= 41 && scooby <= 62) || (scooby >= 81 && scooby <= 94) ) && cells[scooby].classList.contains('mystFromLeftBack') 
-    || ((scooby >= 17 && scooby <= 30) || (scooby >= 41 && scooby <= 62) || (scooby >= 81 && scooby <= 94)) && cells[scooby].classList.contains('leftFlower'))  { //! it only works for the front of the van, not the flower or the back of the van
+    if (((scooby >= 17 && scooby <= 30) || (scooby >= 41 && scooby <= 62) || (scooby >= 81 && scooby <= 94)) && cells[scooby].classList.contains('mystFromLeftFront')
+      || ((scooby >= 17 && scooby <= 30) || (scooby >= 41 && scooby <= 62) || (scooby >= 81 && scooby <= 94)) && cells[scooby].classList.contains('mystFromLeftBack')
+      || ((scooby >= 17 && scooby <= 30) || (scooby >= 41 && scooby <= 62) || (scooby >= 81 && scooby <= 94)) && cells[scooby].classList.contains('leftFlower')) { 
       cells[scooby].classList.remove('scooby')
       scooby += 1
       cells[scooby].classList.add('scooby')
@@ -329,12 +325,12 @@ function moveWithVanLeft() {
 
 function moveWithLogoRight() {
   moveWithLogoRightInterval = setInterval(() => {
-    if (((scooby >= 33 && scooby <= 46) || (scooby >= 65 && scooby <= 78)) && (cells[scooby].classList.contains('mystFromRightFront') || cells[scooby].classList.contains('mystFromRightBack')))  {
+    if (((scooby >= 33 && scooby <= 46) || (scooby >= 65 && scooby <= 78)) && (cells[scooby].classList.contains('mystFromRightFront') || cells[scooby].classList.contains('mystFromRightBack'))) {
       cells[scooby].classList.remove('scooby')
       scooby -= 1
-      cells[scooby].classList.add('scooby') 
+      cells[scooby].classList.add('scooby')
     }
-  }, 999.5) 
+  }, 999.5)
 }
 
 start.addEventListener('click', () => {
@@ -347,21 +343,26 @@ start.addEventListener('click', () => {
       time--
       loseLife()
       win()
-    } else if (time === 0 && lives > 0){ //! before this was just an else time === 0 
+      console.log(lives)
+    } else if (time === 0) {
+      gameOver()
+    }
+
+    if (lives > 0 && time === 0) { //! this is working now but the lives are lost at 1 second to go instead of 0 and gameover happens at 2 seconds left when there is 1 life left
+      livesTotal.innerHTML = lives - 1
+      resetChar()
+      time += 30
+      lives -= 1
+      console.log('hello')
+    } else if (time === 0) {
       gameOver()
     }
   }, 1000)
 })
 
-restart.addEventListener('click', () => {
-  clearInterval(intervalID)
-  resetChar()
-  lives = 3
-  score = 0
-  time = 30
-  livesTotal.innerHTML = `${lives}`
-  timeTotal.innerHTML = `${time}`
-  scoreTotal.innerHTML = `${score}`
+restart.addEventListener('click', () => { //! want to move all the characters back to their starting array !!
+  gameOver()
+  // cells[leftVilStart] = leftVilStart 
 })
 
 
