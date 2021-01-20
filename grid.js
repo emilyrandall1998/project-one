@@ -32,8 +32,6 @@ scoreTotal.innerHTML = score
 livesTotal.innerHTML = lives
 timeTotal.innerHTML = time
 
-console.log(cells[outOfBoundsRight])
-
 //? create the grid
 for (let index = 0; index < width * height; index++) {
   //* generate each element
@@ -266,7 +264,7 @@ function loseLife() {
       clearInterval(loseLifeInterval)
       time = 30
       timeTotal.innerHTML = `${time}`
-    } else if (((scooby >= 17 && scooby <= 94) && !(cells[scooby].classList.contains('mystFromLeftFront') || cells[scooby].classList.contains('mystFromLeftBack') || cells[scooby].classList.contains('leftFlower')))) { //! cells[outOfBoundsLeft] is not valid ? - need to add that if scooby enters the out of bounds zone also lose a life but it won't accept if cells[outOfBoundsLeft/Right].classList.contains('scooby')
+    } else if ((scooby >= 17 && scooby <= 94) && !cells[scooby].classList.contains('mystFromLeftFront') && !cells[scooby].classList.contains('mystFromLeftBack') && !cells[scooby].classList.contains('leftFlower') && !cells[scooby].classList.contains('mystFromRightFront') && !cells[scooby].classList.contains('mystFromRightBack')) { //! cells[outOfBoundsLeft] is not valid ? - need to add that if scooby enters the out of bounds zone also lose a life but it won't accept if cells[outOfBoundsLeft/Right].classList.contains('scooby')
       console.log('lose a life')
       livesTotal.innerHTML = lives -= 1
       resetChar()
@@ -274,16 +272,13 @@ function loseLife() {
       time = 30
       timeTotal.innerHTML = `${time}`
     } else if (lives === 0) {
-      alert('Zoinks, you lost! Click \'ok\' to play again!')
       gameOver()
+      alert('Zoinks, you lost! Click \'ok\' to play again!')
   }
-  }, 500)
+  }, 100)
 }
 
 function gameOver() {
-  if (lives === 0 || (lives === 0 && time === 0)) { //! AM CHANGING THIS FROM || TO && ?
-    // console.log('GAME OVER')
-    // document.removeEventListener('keyup', function(event))
     clearInterval(mystRightID)
     clearInterval(mystLeftID)
     clearInterval(villainLeftID)
@@ -296,12 +291,13 @@ function gameOver() {
     scoreTotal.innerHTML = `${score}`
     console.log(lives)
     clearInterval(intervalID)
-  }
+    resetChar()
+
 }
 
 //? the character wins the game 
 function win() {
-  const safeZone = cells[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]
+  // const safeZone = cells[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]
   if (time >= 0 && cells[scooby].classList.contains('safeZone')) {
     console.log('u safe')
     score += 100
@@ -315,18 +311,20 @@ function win() {
     cells[scooby].classList.remove('scooby')
     alert('You win - treat yourself to a Scooby Snack! Refresh the page to play again!')
   }
-  console.log(safeZone)
+  // console.log(safeZone)
 }
 
 //! --------------------------------------HERE-------------------------------------------->
 function moveWithVanLeft() {
   moveWithVanLeftInterval = setInterval(() => {
-    if (((scooby >= 17 && scooby <= 30) || (scooby >= 41 && scooby <= 62) || (scooby >= 81 && scooby <= 94)) && (cells[scooby].classList.contains('mystFromLeftFront') || cells[scooby].classList.contains('mystFromLeftBack') || cells[scooby].classList.contains('leftFlower')))  { //! it only wirks for the front of the van, not the flower or the back of the van 
+    if (((scooby >= 17 && scooby <= 30) || (scooby >= 41 && scooby <= 62) || (scooby >= 81 && scooby <= 94)) && cells[scooby].classList.contains('mystFromLeftFront') 
+    || ((scooby >= 17 && scooby <= 30) || (scooby >= 41 && scooby <= 62) || (scooby >= 81 && scooby <= 94) ) && cells[scooby].classList.contains('mystFromLeftBack') 
+    || ((scooby >= 17 && scooby <= 30) || (scooby >= 41 && scooby <= 62) || (scooby >= 81 && scooby <= 94)) && cells[scooby].classList.contains('leftFlower'))  { //! it only works for the front of the van, not the flower or the back of the van
       cells[scooby].classList.remove('scooby')
       scooby += 1
-      cells[scooby].classList.add('scooby') 
+      cells[scooby].classList.add('scooby')
     }
-  }, 1000) 
+  }, 999.5)
 }
 
 function moveWithLogoRight() {
@@ -336,7 +334,7 @@ function moveWithLogoRight() {
       scooby -= 1
       cells[scooby].classList.add('scooby') 
     }
-  }, 1000) 
+  }, 999.5) 
 }
 
 start.addEventListener('click', () => {
@@ -349,12 +347,8 @@ start.addEventListener('click', () => {
       time--
       loseLife()
       win()
-    } else {
+    } else if (time === 0 && lives > 0){ //! before this was just an else time === 0 
       gameOver()
-      livesTotal.innerHTML = lives - 1
-      cells[scooby].classList.remove('scooby')
-      time = 30 
-      clearInterval(intervalID)
     }
   }, 1000)
 })
