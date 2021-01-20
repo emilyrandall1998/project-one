@@ -208,6 +208,8 @@ function movePieces() {
   moveLeftVil()
   moveRightMyst()
   moveLeftMyst()
+  moveWithVanLeft()
+  moveWithLogoRight()
 }
 
 // let scoobyChar = 'scooby'
@@ -260,6 +262,8 @@ function loseLife() {
       livesTotal.innerHTML = lives -= 1
       resetChar()
       clearInterval(loseLifeInterval)
+      time = 30
+      timeTotal.innerHTML = `${time}`
     } else if (lives === 0) {
       alert('Zoinks, you lost! Refresh the page to play again!')
       gameOver()
@@ -268,7 +272,7 @@ function loseLife() {
 }
 
 function gameOver() {
-  if (lives === 0 || time === 0) {
+  if (lives === 0 || (lives === 0 && time === 0)) { //! AM CHANGING THIS FROM || TO &&
     // console.log('GAME OVER')
     // document.removeEventListener('keyup', function(event))
     clearInterval(mystRightID)
@@ -294,19 +298,42 @@ function win() {
     score += 100
     scoreTotal.innerHTML = `${score}`
     resetChar()
+    // clearInterval(intervalID)
+    time = 30
+    timeTotal.innerHTML = `${time}`
   }
   if (score === 500) {
     cells[scooby].classList.remove('scooby')
-    alert('You win! Treat yourself to a Scooby Snack!')
+    alert('You win - treat yourself to a Scooby Snack! Refresh the page to play again!')
   }
   console.log(safeZone)
+}
+
+//! --------------------------------------HERE-------------------------------------------->
+function moveWithVanLeft() {
+  moveWithVanLeftInterval = setInterval(() => {
+    if (((scooby >= 17 && scooby <= 30) || (scooby >= 41 && scooby <= 62) || (scooby >= 81 && scooby <= 94)) && (cells[scooby].classList.contains('mystFromLeftFront') || cells[scooby].classList.contains('mystFromLeftBack') || cells[scooby].classList.contains('leftFlower')))  {
+      cells[scooby].classList.remove('scooby')
+      scooby += 1
+      cells[scooby].classList.add('scooby') 
+    }
+  }, 1000) 
+}
+
+function moveWithLogoRight() {
+  moveWithLogoRightInterval = setInterval(() => {
+    if (((scooby >= 33 && scooby <= 46) || (scooby >= 65 && scooby <= 78)) && (cells[scooby].classList.contains('mystFromRightFront') || cells[scooby].classList.contains('mystFromRightBack')))  {
+      cells[scooby].classList.remove('scooby')
+      scooby -= 1
+      cells[scooby].classList.add('scooby') 
+    }
+  }, 1000) 
 }
 
 start.addEventListener('click', () => {
   moveCharacter()
   movePieces()
   //? click start, the timer begins, if timer runs out lose a life and put scooby back at the start  
-  //! just swapped the if statements around and that made it worse
   intervalID = setInterval(() => {
     if (time >= 0) {
       timeTotal.innerHTML = time
@@ -318,26 +345,22 @@ start.addEventListener('click', () => {
       console.log('out of time')
       console.log(time)
       livesTotal.innerHTML = lives - 1
-      // timeTotal.innerHTML = 0
       cells[scooby].classList.remove('scooby')
-      // cells[199].classList.add('scooby')
-      time = 30 //? this isn't working??
+      time = 30 
       clearInterval(intervalID)
-      //! need to remove the event listener and start the interval/click action again
-      // button.removeEventListener() //? <-- to make sure the interval restarts immediately without having to click start again?
     }
   }, 1000)
 })
 
 restart.addEventListener('click', () => {
-  moveCharacter()
-  timeTotal.innerHTML = 30
-  scoreTotal.innerHTML = 0
-  lives = 3
-  intervalID = 0
   clearInterval(intervalID)
-  cells[scooby].classList.remove('scooby')
-  cells[199].classList.add('scooby')
+  resetChar()
+  lives = 3
+  score = 0
+  time = 30
+  livesTotal.innerHTML = `${lives}`
+  timeTotal.innerHTML = `${time}`
+  scoreTotal.innerHTML = `${score}`
 })
 
 
