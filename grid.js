@@ -29,6 +29,7 @@ let villainRightID
 let villainLeftID
 let intervalID
 let loseLifeInterval
+let gameStart = false
 scoreTotal.innerHTML = score
 livesTotal.innerHTML = lives
 timeTotal.innerHTML = time
@@ -41,7 +42,7 @@ for (let index = 0; index < width * height; index++) {
   grid.appendChild(cell)
   cells.push(cell)
   //* number each cell by its index.
-  cell.innerHTML = index
+  // cell.innerHTML = index
   //* set the width and height of cells
   cell.style.width = `${100 / width}%`
   cell.style.height = `${100 / height}%`
@@ -223,31 +224,33 @@ function movePieces() {
 // }
 // // }
 
+
 function moveCharacter() {
-  //? to allow scooby to move around inside the grid's borders and only escape in DZ2
-  document.addEventListener('keyup', (event) => {
-    const key = event.key
-    const leftBound = [1, 97, 113, 129, 145, 161, 177, 193]
-    const rightBound = [14, 110, 126, 142, 158, 174, 190, 206]
-    // console.log(rightBound)
-    if (key === 'ArrowRight' && !(rightBound.includes(scooby))) {
-      cells[scooby].classList.remove('scooby')
-      scooby += 1
-      cells[scooby].classList.add('scooby')
-    } else if (key === 'ArrowLeft' && !(leftBound.includes(scooby))) {
-      cells[scooby].classList.remove('scooby')
-      scooby -= 1
-      cells[scooby].classList.add('scooby')
-    } else if (key === 'ArrowDown' && !(scooby + width >= width * height)) {
-      cells[scooby].classList.remove('scooby')
-      scooby += width
-      cells[scooby].classList.add('scooby')
-    } else if (key === 'ArrowUp' && !(scooby < width)) {
-      cells[scooby].classList.remove('scooby')
-      scooby -= width
-      cells[scooby].classList.add('scooby')
-    }
-  })
+  if (gameStart === false) {
+    document.addEventListener('keyup', (event) => {
+      const key = event.key
+      const leftBound = [1, 97, 113, 129, 145, 161, 177, 193]
+      const rightBound = [14, 110, 126, 142, 158, 174, 190, 206]
+      // console.log(rightBound)
+      if (key === 'ArrowRight' && !(rightBound.includes(scooby))) {
+        cells[scooby].classList.remove('scooby')
+        scooby += 1
+        cells[scooby].classList.add('scooby')
+      } else if (key === 'ArrowLeft' && !(leftBound.includes(scooby))) {
+        cells[scooby].classList.remove('scooby')
+        scooby -= 1
+        cells[scooby].classList.add('scooby')
+      } else if (key === 'ArrowDown' && !(scooby + width >= width * height)) {
+        cells[scooby].classList.remove('scooby')
+        scooby += width
+        cells[scooby].classList.add('scooby')
+      } else if (key === 'ArrowUp' && !(scooby < width)) {
+        cells[scooby].classList.remove('scooby')
+        scooby -= width
+        cells[scooby].classList.add('scooby')
+      }
+    })
+  }
 }
 
 function resetChar() {
@@ -299,6 +302,7 @@ function gameOver() {
   clearInterval(intervalID)
   clearInterval(loseLifeInterval) //! delete this if it doesn't work!
   resetChar()
+  // document.removeEventListener('keyup', keyUpEvent(event))
 }
 
 //? the character wins the game 
@@ -344,6 +348,7 @@ function moveWithLogoRight() {
 start.addEventListener('click', () => {
   moveCharacter()
   movePieces()
+  gameStart = true
   //? click start, the timer begins, if timer runs out lose a life and put scooby back at the start  
   intervalID = setInterval(() => {
     if (time >= 0) {
@@ -351,20 +356,16 @@ start.addEventListener('click', () => {
       time--
       loseLife()
       win()
-      // console.log(lives)
     } else if (time === 0) {
       gameOver()
     }
-
     if (lives > 0 && time === 0) { //! this is working now but the lives are lost at 1 second to go instead of 0 and gameover happens at 2 seconds left when there is 1 life left
+      
       livesTotal.innerHTML = lives - 1
       resetChar()
       time += 30
       lives -= 1
-      console.log('hello')
-    } else if (time === 0) {
-      gameOver()
-    }
+    } 
   }, 1000)
 })
 
