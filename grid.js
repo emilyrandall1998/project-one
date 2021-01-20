@@ -28,6 +28,7 @@ let mystLeftID
 let villainRightID
 let villainLeftID
 let intervalID
+let loseLifeInterval
 scoreTotal.innerHTML = score
 livesTotal.innerHTML = lives
 timeTotal.innerHTML = time
@@ -212,6 +213,7 @@ function movePieces() {
   moveWithLogoRight()
 }
 
+//? for adding more characters later 
 // let scoobyChar = 'scooby'
 // let shaggyChar = 'shaggy'
 // let character = scoobyChar
@@ -264,8 +266,13 @@ function loseLife() {
       clearInterval(loseLifeInterval)
       time = 30
       timeTotal.innerHTML = `${time}`
-    } else if ((scooby >= 17 && scooby <= 94) && !cells[scooby].classList.contains('mystFromLeftFront') && !cells[scooby].classList.contains('mystFromLeftBack') && !cells[scooby].classList.contains('leftFlower') && !cells[scooby].classList.contains('mystFromRightFront') && !cells[scooby].classList.contains('mystFromRightBack')) { //! cells[outOfBoundsLeft] is not valid ? - need to add that if scooby enters the out of bounds zone also lose a life but it won't accept if cells[outOfBoundsLeft/Right].classList.contains('scooby')
-      console.log('lose a life')
+    } else if ((scooby >= 17 && scooby <= 94) && !cells[scooby].classList.contains('mystFromLeftFront') && !cells[scooby].classList.contains('mystFromLeftBack') && !cells[scooby].classList.contains('leftFlower') && !cells[scooby].classList.contains('mystFromRightFront') && !cells[scooby].classList.contains('mystFromRightBack')) { 
+      livesTotal.innerHTML = lives -= 1
+      resetChar()
+      clearInterval(loseLifeInterval)
+      time = 30
+      timeTotal.innerHTML = `${time}`
+    } else if (outOfBoundsRight.includes(scooby) || outOfBoundsLeft.includes(scooby)) {
       livesTotal.innerHTML = lives -= 1
       resetChar()
       clearInterval(loseLifeInterval)
@@ -290,6 +297,7 @@ function gameOver() {
   livesTotal.innerHTML = `${lives}`
   scoreTotal.innerHTML = `${score}`
   clearInterval(intervalID)
+  clearInterval(loseLifeInterval) //! delete this if it doesn't work!
   resetChar()
 }
 
@@ -343,7 +351,7 @@ start.addEventListener('click', () => {
       time--
       loseLife()
       win()
-      console.log(lives)
+      // console.log(lives)
     } else if (time === 0) {
       gameOver()
     }
