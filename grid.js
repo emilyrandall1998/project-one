@@ -4,6 +4,7 @@ const restart = document.querySelector('.restart')
 const scoreTotal = document.querySelector('.score')
 const livesTotal = document.querySelector('.lifeRemaining')
 const timeTotal = document.querySelector('.timeRemaining')
+const audioPlayer = document.querySelector('audio')
 const width = 16
 const height = 13
 const cells = []
@@ -238,7 +239,6 @@ function moveCharacter() {
       const key = event.key
       const leftBound = [1, 97, 113, 129, 145, 161, 177, 193]
       const rightBound = [14, 110, 126, 142, 158, 174, 190, 206]
-      // console.log(rightBound)
       if (key === 'ArrowRight' && !(rightBound.includes(characterPosition))) {
         cells[characterPosition].classList.remove(character)
         characterPosition += 1
@@ -251,6 +251,8 @@ function moveCharacter() {
         cells[characterPosition].classList.remove(character)
         characterPosition += width
         cells[characterPosition].classList.add(character)
+        audioPlayer.src = './Sounds/Jinkies.mp3'
+        audioPlayer.play()
       } else if (key === 'ArrowUp' && !(characterPosition < width)) {
         cells[characterPosition].classList.remove(character)
         characterPosition -= width
@@ -265,7 +267,7 @@ function resetChar() {
   characterPosition = 200
   cells[characterPosition].classList.add(character)
 }
-//!--------------------------------------------------------------------------->
+
 function removeChar() { 
   for (let i = 0; i < cells.length; i++) {
     if (cells[i].classList.contains('scooby')) {
@@ -284,24 +286,46 @@ function removeChar() {
   characterPosition = 200
   cells[characterPosition].classList.add(character)
 }
-//!--------------------------------------------------------------------------->
+//!---------------------------------------------------------------------------->
+// function resetObjects() {
+//   for (let i = 0; i < cells.length; i++) {
+//     if (cells[i].classList.contains('villainsFromLeft')) {
+//       console.log('hello')
+//       cells[i].classList.remove('villainsFromLeft')
+//       leftVilStart.classList.add('villainsFromLeft') 
+//     }
+
+
+//     // } else if (cells[i].classList.contains('villainsFromRight')) {
+//     //   cells[i].classList.remove('villainsFromRight')
+//     //   cells[rightVilStart].classList.add('villainsFromRight')
+//     // }     
+//   }
+//   }
+//!---------------------------------------------------------------------------->
+
 //? function for the character to lose 
 function loseLife() {
-  const loseLifeInterval = setInterval(() => {
+  loseLifeInterval = setInterval(() => {
     if ((cells[characterPosition].classList.contains('villainsFromRight') || cells[characterPosition].classList.contains('villainsFromLeft')) && lives > 0) {
-      // console.log('lose a life')
+      audioPlayer.src = './Sounds/bongo-feet.mp3'
+      audioPlayer.play()
       livesTotal.innerHTML = lives -= 1
       resetChar()
       clearInterval(loseLifeInterval)
       time = 30
       timeTotal.innerHTML = `${time}`
     } else if ((characterPosition >= 17 && characterPosition <= 94) && !cells[characterPosition].classList.contains('mystFromLeftFront') && !cells[characterPosition].classList.contains('mystFromLeftBack') && !cells[characterPosition].classList.contains('leftFlower') && !cells[characterPosition].classList.contains('mystFromRightFront') && !cells[characterPosition].classList.contains('mystFromRightBack')) { 
+      audioPlayer.src = './Sounds/bongo-feet.mp3'
+      audioPlayer.play()
       livesTotal.innerHTML = lives -= 1
       resetChar()
       clearInterval(loseLifeInterval)
       time = 30
       timeTotal.innerHTML = `${time}`
     } else if (outOfBoundsRight.includes(characterPosition) || outOfBoundsLeft.includes(characterPosition)) {
+      audioPlayer.src = './Sounds/bongo-feet.mp3'
+      audioPlayer.play()
       livesTotal.innerHTML = lives -= 1
       resetChar()
       clearInterval(loseLifeInterval)
@@ -317,6 +341,8 @@ function loseLife() {
 function gameOver() {
   clearInterval(mystRightID)
   clearInterval(mystLeftID)
+  clearInterval(moveWithVanLeftInterval)
+  clearInterval(moveWithLogoRightInterval)
   clearInterval(villainLeftID)
   clearInterval(villainRightID)
   time = 30
@@ -329,12 +355,15 @@ function gameOver() {
   clearInterval(loseLifeInterval)
   resetChar()
   removeChar()
+  // resetObjects()
 }
 
 //? the character wins the game 
 function win() {
   if (time >= 0 && cells[characterPosition].classList.contains('safeZone')) {
     score += 100
+    audioPlayer.src = './Sounds/https___www.tones7.com_media_scooby.mp3'
+    audioPlayer.play()
     scoreTotal.innerHTML = `${score}`
     changeChar()
     resetChar()
@@ -343,6 +372,8 @@ function win() {
   }
   if (score === 500) {
     cells[characterPosition].classList.remove(character)
+    audioPlayer.src = './Sounds/Scooby-doo-theme-song.mp3'
+    audioPlayer.play()
     alert('You win - treat yourself to a Scooby Snack! Click start to play again!')
   }
 }
@@ -375,16 +406,15 @@ start.addEventListener('click', () => {
   gameStart = true
   //? click start, the timer begins, if timer runs out lose a life and put scooby back at the start  
   intervalID = setInterval(() => {
-    if (time >= 0) {
+    if (time > -1) {
       timeTotal.innerHTML = time
       time--
-      loseLife()
       win()
-    } else if (time === 0) {
+      loseLife()
+    } else if (time === -1) {
       gameOver()
     }
-    if (lives > 0 && time === 0) { //! this is working now but the lives are lost at 1 second to go instead of 0 and gameover happens at 2 seconds left when there is 1 life left
-      
+    if (lives > 0 && time === -1) { 
       livesTotal.innerHTML = lives - 1
       resetChar()
       time += 30
