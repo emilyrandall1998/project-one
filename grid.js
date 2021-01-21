@@ -263,7 +263,7 @@ function resetChar() {
 function loseLife() {
   const loseLifeInterval = setInterval(() => {
     if ((cells[scooby].classList.contains('villainsFromRight') || cells[scooby].classList.contains('villainsFromLeft')) && lives > 0) {
-      console.log('lose a life')
+      // console.log('lose a life')
       livesTotal.innerHTML = lives -= 1
       resetChar()
       clearInterval(loseLifeInterval)
@@ -308,7 +308,7 @@ function gameOver() {
 //? the character wins the game 
 function win() {
   if (time >= 0 && cells[scooby].classList.contains('safeZone')) {
-    console.log('u safe')
+    // console.log('u safe')
     score += 100
     scoreTotal.innerHTML = `${score}`
     resetChar()
