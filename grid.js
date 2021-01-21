@@ -7,7 +7,7 @@ const timeTotal = document.querySelector('.timeRemaining')
 const width = 16
 const height = 13
 const cells = []
-let scooby = 199
+let characterPosition = 199
 //? creating an array of right to left villains: 
 let rightVilStart = [126, 121, 116, 156, 151, 146, 190, 185, 180] 
 //? creating an array of villains coming in from left to right
@@ -34,6 +34,31 @@ scoreTotal.innerHTML = score
 livesTotal.innerHTML = lives
 timeTotal.innerHTML = time
 
+//!--------------------------------------------------------------------------->
+//? for adding more characters later 
+let scoobyChar = 'scooby'
+let shaggyChar = 'shaggy'
+let velmaChar = 'velma'
+let fredChar = 'fred'
+let daphneChar = 'daphne'
+let character = scoobyChar
+let changeChar = function changeChar() {
+  if (character === scoobyChar && cells[characterPosition].classList.contains('safeZone') && score < 200) {
+    character = shaggyChar
+    console.log('zoinks shaggy')
+} else if (character = shaggyChar && cells[characterPosition].classList.contains('safeZone') && score < 300) {
+  character = velmaChar
+  console.log('jinkees velma')
+} else if (character = velmaChar && cells[characterPosition].classList.contains('safeZone') && score < 400) {
+  character = fredChar
+  console.log('fred')
+} else if (character = fredChar && cells[characterPosition].classList.contains('safeZone') && score < 500) {
+  character = daphneChar
+  console.log('daphne')
+}
+}
+//!---------------------------------------------------------------------------->
+
 //? create the grid
 for (let index = 0; index < width * height; index++) {
   //* generate each element
@@ -48,9 +73,9 @@ for (let index = 0; index < width * height; index++) {
   cell.style.height = `${100 / height}%`
 }
 //? common code block - adds Scooby avatar
-cells[scooby].classList.remove('scooby')
-scooby += 1
-cells[scooby].classList.add('scooby')
+cells[characterPosition].classList.remove(character)
+characterPosition += 1
+cells[characterPosition].classList.add(character)
 
 //? to change the colour of the different grid sections
 for (let i = 0; i <= cells.length; i++) {
@@ -214,27 +239,6 @@ function movePieces() {
   moveWithLogoRight()
 }
 
-//!--------------------------------------------------------------------------->
-//? for adding more characters later 
-let scoobyChar = 'scooby'
-let shaggyChar = 'shaggy'
-let velmaChar = 'velma'
-let fredChar = 'fred'
-let daphneChar = 'daphne'
-let character = scoobyChar
-let changeChar = function changeChar() {
-  if (character === scoobyChar && cells[character].classList.contains('safeZone') && score < 200) {
-    character = shaggyChar
-} else if (character = shaggyChar && cells[character].classList.contains('safeZone') && score < 300) {
-  character = velmaChar
-} else if (character = velmaChar && cells[character].classList.contains('safeZone') && score < 400) {
-  character = fredChar
-} else if (character = fredChar && cells[character].classList.contains('safeZone') && score < 500) {
-  character = daphneChar
-}
-}
-//!---------------------------------------------------------------------------->
-
 function moveCharacter() {
   if (gameStart === false) {
     document.addEventListener('keyup', (event) => {
@@ -242,50 +246,50 @@ function moveCharacter() {
       const leftBound = [1, 97, 113, 129, 145, 161, 177, 193]
       const rightBound = [14, 110, 126, 142, 158, 174, 190, 206]
       // console.log(rightBound)
-      if (key === 'ArrowRight' && !(rightBound.includes(scooby))) {
-        cells[scooby].classList.remove('scooby')
-        scooby += 1
-        cells[scooby].classList.add('scooby')
-      } else if (key === 'ArrowLeft' && !(leftBound.includes(scooby))) {
-        cells[scooby].classList.remove('scooby')
-        scooby -= 1
-        cells[scooby].classList.add('scooby')
-      } else if (key === 'ArrowDown' && !(scooby + width >= width * height)) {
-        cells[scooby].classList.remove('scooby')
-        scooby += width
-        cells[scooby].classList.add('scooby')
-      } else if (key === 'ArrowUp' && !(scooby < width)) {
-        cells[scooby].classList.remove('scooby')
-        scooby -= width
-        cells[scooby].classList.add('scooby')
+      if (key === 'ArrowRight' && !(rightBound.includes(characterPosition))) {
+        cells[characterPosition].classList.remove(character)
+        characterPosition += 1
+        cells[characterPosition].classList.add(character)
+      } else if (key === 'ArrowLeft' && !(leftBound.includes(characterPosition))) {
+        cells[characterPosition].classList.remove(character)
+        characterPosition -= 1
+        cells[characterPosition].classList.add(character)
+      } else if (key === 'ArrowDown' && !(characterPosition + width >= width * height)) {
+        cells[characterPosition].classList.remove(character)
+        characterPosition += width
+        cells[characterPosition].classList.add(character)
+      } else if (key === 'ArrowUp' && !(characterPosition < width)) {
+        cells[characterPosition].classList.remove(character)
+        characterPosition -= width
+        cells[characterPosition].classList.add(character)
       }
     })
   }
 }
 
 function resetChar() {
-  cells[scooby].classList.remove('scooby')
-  scooby = 200
-  cells[scooby].classList.add('scooby')
+  cells[characterPosition].classList.remove(character)
+  characterPosition = 200
+  cells[characterPosition].classList.add(character)
 }
 
 //? function for the character to lose 
 function loseLife() {
   const loseLifeInterval = setInterval(() => {
-    if ((cells[scooby].classList.contains('villainsFromRight') || cells[scooby].classList.contains('villainsFromLeft')) && lives > 0) {
+    if ((cells[characterPosition].classList.contains('villainsFromRight') || cells[characterPosition].classList.contains('villainsFromLeft')) && lives > 0) {
       // console.log('lose a life')
       livesTotal.innerHTML = lives -= 1
       resetChar()
       clearInterval(loseLifeInterval)
       time = 30
       timeTotal.innerHTML = `${time}`
-    } else if ((scooby >= 17 && scooby <= 94) && !cells[scooby].classList.contains('mystFromLeftFront') && !cells[scooby].classList.contains('mystFromLeftBack') && !cells[scooby].classList.contains('leftFlower') && !cells[scooby].classList.contains('mystFromRightFront') && !cells[scooby].classList.contains('mystFromRightBack')) { 
+    } else if ((characterPosition >= 17 && characterPosition <= 94) && !cells[characterPosition].classList.contains('mystFromLeftFront') && !cells[characterPosition].classList.contains('mystFromLeftBack') && !cells[characterPosition].classList.contains('leftFlower') && !cells[characterPosition].classList.contains('mystFromRightFront') && !cells[characterPosition].classList.contains('mystFromRightBack')) { 
       livesTotal.innerHTML = lives -= 1
       resetChar()
       clearInterval(loseLifeInterval)
       time = 30
       timeTotal.innerHTML = `${time}`
-    } else if (outOfBoundsRight.includes(scooby) || outOfBoundsLeft.includes(scooby)) {
+    } else if (outOfBoundsRight.includes(characterPosition) || outOfBoundsLeft.includes(characterPosition)) {
       livesTotal.innerHTML = lives -= 1
       resetChar()
       clearInterval(loseLifeInterval)
@@ -316,17 +320,18 @@ function gameOver() {
 
 //? the character wins the game 
 function win() {
-  if (time >= 0 && cells[scooby].classList.contains('safeZone')) {
+  if (time >= 0 && cells[characterPosition].classList.contains('safeZone')) {
     // console.log('u safe')
     score += 100
     scoreTotal.innerHTML = `${score}`
+    changeChar()
     resetChar()
     // clearInterval(intervalID)
     time = 30
     timeTotal.innerHTML = `${time}`
   }
   if (score === 500) {
-    cells[scooby].classList.remove('scooby')
+    cells[characterPosition].classList.remove(character)
     alert('You win - treat yourself to a Scooby Snack! Click start to play again!')
   }
   // console.log(safeZone)
@@ -334,22 +339,22 @@ function win() {
 
 function moveWithVanLeft() {
   moveWithVanLeftInterval = setInterval(() => {
-    if (((scooby >= 17 && scooby <= 30) || (scooby >= 41 && scooby <= 62) || (scooby >= 81 && scooby <= 94)) && cells[scooby].classList.contains('mystFromLeftFront')
-      || ((scooby >= 17 && scooby <= 30) || (scooby >= 41 && scooby <= 62) || (scooby >= 81 && scooby <= 94)) && cells[scooby].classList.contains('mystFromLeftBack')
-      || ((scooby >= 17 && scooby <= 30) || (scooby >= 41 && scooby <= 62) || (scooby >= 81 && scooby <= 94)) && cells[scooby].classList.contains('leftFlower')) { 
-      cells[scooby].classList.remove('scooby')
-      scooby += 1
-      cells[scooby].classList.add('scooby')
+    if (((characterPosition >= 17 && characterPosition <= 30) || (characterPosition >= 41 && characterPosition <= 62) || (characterPosition >= 81 && characterPosition <= 94)) && cells[characterPosition].classList.contains('mystFromLeftFront')
+      || ((characterPosition >= 17 && characterPosition <= 30) || (characterPosition >= 41 && characterPosition <= 62) || (characterPosition >= 81 && characterPosition <= 94)) && cells[characterPosition].classList.contains('mystFromLeftBack')
+      || ((characterPosition >= 17 && characterPosition <= 30) || (characterPosition >= 41 && characterPosition <= 62) || (characterPosition >= 81 && characterPosition <= 94)) && cells[characterPosition].classList.contains('leftFlower')) { 
+      cells[characterPosition].classList.remove(character)
+      characterPosition += 1
+      cells[characterPosition].classList.add(character)
     }
   }, 999.5)
 }
 
 function moveWithLogoRight() {
   moveWithLogoRightInterval = setInterval(() => {
-    if (((scooby >= 33 && scooby <= 46) || (scooby >= 65 && scooby <= 78)) && (cells[scooby].classList.contains('mystFromRightFront') || cells[scooby].classList.contains('mystFromRightBack'))) {
-      cells[scooby].classList.remove('scooby')
-      scooby -= 1
-      cells[scooby].classList.add('scooby')
+    if (((characterPosition >= 33 && characterPosition <= 46) || (characterPosition >= 65 && characterPosition <= 78)) && (cells[characterPosition].classList.contains('mystFromRightFront') || cells[characterPosition].classList.contains('mystFromRightBack'))) {
+      cells[characterPosition].classList.remove(character)
+      characterPosition -= 1
+      cells[characterPosition].classList.add(character)
     }
   }, 999.5)
 }
