@@ -34,7 +34,6 @@ scoreTotal.innerHTML = score
 livesTotal.innerHTML = lives
 timeTotal.innerHTML = time
 
-//!--------------------------------------------------------------------------->
 //? for adding more characters later 
 let scoobyChar = 'scooby'
 let shaggyChar = 'shaggy'
@@ -57,14 +56,13 @@ let changeChar = function changeChar() {
   console.log('daphne')
 }
 }
-//!---------------------------------------------------------------------------->
 
 //? create the grid
 for (let index = 0; index < width * height; index++) {
   //* generate each element
   const cell = document.createElement('div')
   cell.classList.add('cell')
-  grid.appendChild(cell)
+  grid.appendChild(cell) 
   cells.push(cell)
   //* number each cell by its index.
   // cell.innerHTML = index
@@ -96,7 +94,7 @@ for (let i = 0; i <= cells.length; i++) {
   }
   //* adding the characters and obstacles 
   if (rightVilStart.includes(i)) {
-    cells[i].classList.add('villainsFromRight') //? adding the villainsFromRight to their starting positions 
+    cells[i].classList.add('villainsFromRight') 
   }
   if (leftVilStart.includes(i)) {
     cells[i].classList.add('villainsFromLeft')
@@ -126,10 +124,7 @@ for (let i = 0; i <= cells.length; i++) {
     cells[i].style.border = 'none'
   }
 }
-// console.log(rightVilStart)
-// console.log(leftVilStart)
-// console.log(outOfBoundsRight)
-// console.log(outOfBoundsLeft)
+
 function moveRightVil() {
   villainRightID = setInterval(() => {
     rightVilStart.forEach((villain, i) => {
@@ -142,8 +137,6 @@ function moveRightVil() {
         cells[villain].classList.remove('villainsFromRight')
         rightVilStart[i] -= 1
         cells[villain -= 1].classList.add('villainsFromRight')
-        // console.log(villain)
-        // console.log(rightVilStart)
       }
     })
   }, 2000)
@@ -272,7 +265,26 @@ function resetChar() {
   characterPosition = 200
   cells[characterPosition].classList.add(character)
 }
-
+//!--------------------------------------------------------------------------->
+function removeChar() { 
+  for (let i = 0; i < cells.length; i++) {
+    if (cells[i].classList.contains('scooby')) {
+      cells[i].classList.remove('scooby')
+    } else if (cells[i].classList.contains('shaggy')) {
+      cells[i].classList.remove('shaggy')
+    } else if (cells[i].classList.contains('velma')) {
+      cells[i].classList.remove('velma')
+    } else if (cells[i].classList.contains('fred')) {
+      cells[i].classList.remove('fred')
+    } else if (cells[i].classList.contains('daphne')) {
+      (cells[i].classList.remove('daphne'))
+    }
+  }
+  character = scoobyChar
+  characterPosition = 200
+  cells[characterPosition].classList.add(character)
+}
+//!--------------------------------------------------------------------------->
 //? function for the character to lose 
 function loseLife() {
   const loseLifeInterval = setInterval(() => {
@@ -316,17 +328,16 @@ function gameOver() {
   clearInterval(intervalID)
   clearInterval(loseLifeInterval)
   resetChar()
+  removeChar()
 }
 
 //? the character wins the game 
 function win() {
   if (time >= 0 && cells[characterPosition].classList.contains('safeZone')) {
-    // console.log('u safe')
     score += 100
     scoreTotal.innerHTML = `${score}`
     changeChar()
     resetChar()
-    // clearInterval(intervalID)
     time = 30
     timeTotal.innerHTML = `${time}`
   }
@@ -334,7 +345,6 @@ function win() {
     cells[characterPosition].classList.remove(character)
     alert('You win - treat yourself to a Scooby Snack! Click start to play again!')
   }
-  // console.log(safeZone)
 }
 
 function moveWithVanLeft() {
