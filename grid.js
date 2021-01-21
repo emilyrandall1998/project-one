@@ -9,7 +9,7 @@ const height = 13
 const cells = []
 let scooby = 199
 //? creating an array of right to left villains: 
-let rightVilStart = [126, 121, 116, 156, 151, 146, 190, 185, 180] //! trying to assign those values to cells
+let rightVilStart = [126, 121, 116, 156, 151, 146, 190, 185, 180] 
 //? creating an array of villains coming in from left to right
 let leftVilStart = [129, 132, 135, 138, 141, 161, 164, 167, 170, 173]
 //? these two variables below are the out of bound cells where the avatar cannot go (with no background)
@@ -214,16 +214,26 @@ function movePieces() {
   moveWithLogoRight()
 }
 
+//!--------------------------------------------------------------------------->
 //? for adding more characters later 
-// let scoobyChar = 'scooby'
-// let shaggyChar = 'shaggy'
-// let character = scoobyChar
-// // let changeChar = changeChar() {
-// // if (character === scoobyChar && cells(//!end cells )){
-// // character = shaggyChar
-// }
-// // }
-
+let scoobyChar = 'scooby'
+let shaggyChar = 'shaggy'
+let velmaChar = 'velma'
+let fredChar = 'fred'
+let daphneChar = 'daphne'
+let character = scoobyChar
+let changeChar = function changeChar() {
+  if (character === scoobyChar && cells[character].classList.contains('safeZone') && score < 200) {
+    character = shaggyChar
+} else if (character = shaggyChar && cells[character].classList.contains('safeZone') && score < 300) {
+  character = velmaChar
+} else if (character = velmaChar && cells[character].classList.contains('safeZone') && score < 400) {
+  character = fredChar
+} else if (character = fredChar && cells[character].classList.contains('safeZone') && score < 500) {
+  character = daphneChar
+}
+}
+//!---------------------------------------------------------------------------->
 
 function moveCharacter() {
   if (gameStart === false) {
@@ -300,9 +310,8 @@ function gameOver() {
   livesTotal.innerHTML = `${lives}`
   scoreTotal.innerHTML = `${score}`
   clearInterval(intervalID)
-  clearInterval(loseLifeInterval) //! delete this if it doesn't work!
+  clearInterval(loseLifeInterval)
   resetChar()
-  // document.removeEventListener('keyup', keyUpEvent(event))
 }
 
 //? the character wins the game 
@@ -318,7 +327,7 @@ function win() {
   }
   if (score === 500) {
     cells[scooby].classList.remove('scooby')
-    alert('You win - treat yourself to a Scooby Snack! Refresh the page to play again!')
+    alert('You win - treat yourself to a Scooby Snack! Click start to play again!')
   }
   // console.log(safeZone)
 }

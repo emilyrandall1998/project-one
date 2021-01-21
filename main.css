@@ -82,6 +82,18 @@ border: orange solid 0.5px;
   background-image: url('./images/Shaggy.png') !important;
   background-size: cover;
 }
+.velma {
+  background-image: url('./images/Velma.png') !important;
+  background-size: cover;
+}
+.fred {
+  background-image: url('./images/Fred_Jones.gif') !important;
+  background-size: cover;
+}
+.daphne {
+  background-image: url('./images/Daphne.png') !important;
+  background-size: cover;
+}
 
 .villainsFromLeft {
   background-image: url('./images/VF\ Left.png');
