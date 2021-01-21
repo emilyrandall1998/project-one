@@ -287,7 +287,8 @@ function removeChar() {
   cells[characterPosition].classList.add(character)
 }
 //!---------------------------------------------------------------------------->
-// function resetObjects() {
+// //? move the characters back to their starting array?
+//function resetObjects() {
 //   for (let i = 0; i < cells.length; i++) {
 //     if (cells[i].classList.contains('villainsFromLeft')) {
 //       console.log('hello')
@@ -332,6 +333,9 @@ function loseLife() {
       time = 30
       timeTotal.innerHTML = `${time}`
     } else if (lives === 0) {
+      audioPlayer.src = './Sounds/Meddling Kids.mov'
+      // './Sounds/Sad_Trombone-Joe_Lamb-665429450.mp3'
+      audioPlayer.play()
       gameOver()
       alert('Zoinks, you lost! Click \'ok\' to play again!')
     }
@@ -423,9 +427,8 @@ start.addEventListener('click', () => {
   }, 1000)
 })
 
-restart.addEventListener('click', () => { //! want to move all the characters back to their starting array !!
+restart.addEventListener('click', () => { 
   gameOver()
-  // cells[leftVilStart] = leftVilStart 
 })
 
 
