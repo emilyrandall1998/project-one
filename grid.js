@@ -340,7 +340,6 @@ function loseLife() {
       timeTotal.innerHTML = `${time}`
     } else if (lives === 0) {
       audioPlayer.src = './Sounds/Meddling Kids.mov'
-      // './Sounds/Sad_Trombone-Joe_Lamb-665429450.mp3'
       audioPlayer.play()
       gameOver()
       alert('Zoinks, you lost! Click \'ok\' to play again!')
@@ -381,9 +380,9 @@ function win() {
     timeTotal.innerHTML = `${time}`
   }
   if (score === 500) {
-    cells[characterPosition].classList.remove(character)
     audioPlayer.src = './Sounds/Scooby-doo-theme-song.mp3'
     audioPlayer.play()
+    cells[characterPosition].classList.remove(character)
     alert('You win - treat yourself to a Scooby Snack! Click start to play again!')
   }
 }
