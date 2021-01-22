@@ -383,7 +383,7 @@ function win() {
     audioPlayer.src = './Sounds/Scooby-doo-theme-song.mp3'
     audioPlayer.play()
     cells[characterPosition].classList.remove(character)
-    alert('You win - treat yourself to a Scooby Snack! Click start to play again!')
+    alert('You win - treat yourself to a Scooby Snack! Refresh the page to play again!')
   }
 }
 
