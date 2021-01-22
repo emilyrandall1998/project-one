@@ -382,8 +382,8 @@ function win() {
   if (score === 500) {
     audioPlayer.src = './Sounds/Scooby-doo-theme-song.mp3'
     audioPlayer.play()
-    cells[characterPosition].classList.remove(character)
-    alert('You win - treat yourself to a Scooby Snack! Click start to play again!')
+    // cells[characterPosition].classList.remove(character)
+    // alert('You win - treat yourself to a Scooby Snack! Click start to play again!')
   }
 }
 
