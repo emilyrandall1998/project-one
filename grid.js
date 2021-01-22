@@ -243,10 +243,14 @@ function moveCharacter() {
         cells[characterPosition].classList.remove(character)
         characterPosition += 1
         cells[characterPosition].classList.add(character)
+        audioPlayer.src = './Sounds/CharMove.mp3'
+        audioPlayer.play()
       } else if (key === 'ArrowLeft' && !(leftBound.includes(characterPosition))) {
         cells[characterPosition].classList.remove(character)
         characterPosition -= 1
         cells[characterPosition].classList.add(character)
+        audioPlayer.src = './Sounds/CharMove.mp3'
+        audioPlayer.play()
       } else if (key === 'ArrowDown' && !(characterPosition + width >= width * height)) {
         cells[characterPosition].classList.remove(character)
         characterPosition += width
@@ -257,6 +261,8 @@ function moveCharacter() {
         cells[characterPosition].classList.remove(character)
         characterPosition -= width
         cells[characterPosition].classList.add(character)
+        audioPlayer.src = './Sounds/CharMove.mp3'
+        audioPlayer.play()
       }
     })
   }
@@ -405,6 +411,8 @@ function moveWithLogoRight() {
 }
 
 start.addEventListener('click', () => {
+  audioPlayer.src = './Sounds/where.wav'
+  audioPlayer.play()
   moveCharacter()
   movePieces()
   gameStart = true
