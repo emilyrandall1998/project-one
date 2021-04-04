@@ -1,6 +1,6 @@
 ![GA Logo](./images/GALogo.png)
 # Project 1 - Scooby-Doo themed 'Frogger'
-<img src="./Images/Scooby-Doo.png" alt ="Scooby icon" width="80px" height="80px">
+<!-- <img src="./Images/Scooby-Doo.png" alt ="Scooby icon" width="80px" height="80px"> -->
 ## Overview
 For my first General Assembly SEI project I recreated the retro game 'Frogger' using vanilla JavaScript, HTML and CSS, giving it a Scooby-Doo theme.  
 
