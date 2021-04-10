@@ -1,6 +1,6 @@
 ![GA Logo](./images/GALogo.png)
 # Project 1 - Scooby-Doo themed 'Frogger'
-![Scooby Icon](Images/Scooby-Doo.png) 
+![Scooby Icon](./images/Scooby-Doo.png) 
 ## Overview
 For my first General Assembly SEI project I recreated the retro game 'Frogger' using vanilla JavaScript, HTML and CSS, giving it a Scooby-Doo theme.  
 
