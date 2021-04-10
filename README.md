@@ -24,6 +24,9 @@ You can try it out using the link provided [here](https://emilyrandall1998.githu
 
 ## Approach
 ### Creating the grid 
+
+[Game Board](./images/p1gameboard.png)
+
 I created the grid mainly using JavaScript using a **div** created in the HTML file, which I made into a flex item within the flex container of the **body**. I use a for loop to generate each element (cell) of the grid, and within the for loop I created a 'cell' variable that creates the array of cell divs to sit within the grid div:
 
 ```
@@ -140,7 +143,10 @@ clearInterval(moveWithVanLeftInterval)
 clearInterval(moveWithLogoRightInterval)
 ```
 
-This eliminated the problem of playing after using the restart button, although I found that the game still sometimes killed the fifth character on the first round of playing. However, for some reason this issue seemed to go away with deployment/occurred less frequently. Also, time not going to 0 when you die, not returning the obstacles to their original starting arrays. Also having multiple event listeners doubling up and forcing the character off the van and onto the road which should technically be picked up as a 'kill zone' ALSO TALK ABOUT THE GAME = TRUE/FALSE THING 
+This eliminated the problem of playing after using the restart button, although I found that the game still sometimes killed the fifth character on the first round of playing. However, for some reason this issue seemed to go away with deployment/occurred less frequently. The final persistent bug is that the timer doesn't display 0 when you die, but stays on 1 second.
+
+### Lessons learned
+This was my first project, and first attempt at combining HTML, CSS and JavaScript! It was a very useful learning experience for me as it really helped me get to grips with these new technologies, although I focused mainly on vanilla JavaScript. My biggest win was finally getting the villains moving across the board automatically, as this took a long time for me to wrap my head around at the start of the project. I struggled a bit with time management, which made it harder for me to fix and address persistent bugs towards the end, but overall I was pleased with this as a first project.
 
 ### Future features 
 - Local storage for a leaderboard 
