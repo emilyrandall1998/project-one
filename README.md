@@ -1,6 +1,6 @@
 ![GA Logo](./images/GALogo.png)
 # Project 1 - Scooby-Doo themed 'Frogger'
-<!-- <img src="./Images/Scooby-Doo.png" alt ="Scooby icon" width="80px" height="80px"> -->
+<img src="./Images/Scooby-Doo.png" alt ="Scooby icon" width="80px" height="80px">
 ## Overview
 For my first General Assembly SEI project I recreated the retro game 'Frogger' using vanilla JavaScript, HTML and CSS, giving it a Scooby-Doo theme.  
 
@@ -74,7 +74,7 @@ if (character === scoobyChar && cells[characterPosition].classList.contains('saf
 
 ### Functionality
 #### Moving the obstacles
-Within the gameboard I have two danger zones. The first has villains coming in from the right and left hand sides of the board, which the character has to dodge in order to avoid losing a life. The second danger zone is a kind of inversion of this - you have to jump onto the moving vans in order to get across th road, and if the character touches the road you lose a life. 
+Within the game board I have two danger zones. The first has villains coming in from the right and left hand sides of the board, which the character has to dodge in order to avoid losing a life. The second danger zone is a kind of inversion of this - you have to jump onto the moving vans in order to get across the road, and if the character touches the road you lose a life. 
 
 All of the obstacles are present on the board from the beginning of the game, each side within it's own starting array: 
 
@@ -123,7 +123,7 @@ To check whether the character needs to lose a life, I created a loseLife() func
 
 3) Whether the the cell containing character position is within an 'out of bounds' column
 
-### Event listners 
+### Event listeners 
 I used three event listeners throughout the game: 
 
 1) A start button event listener to set off the timer, begin the obstacle movement intervals and triggers the move character event listener 
@@ -140,7 +140,7 @@ clearInterval(moveWithVanLeftInterval)
 clearInterval(moveWithLogoRightInterval)
 ```
 
-This eliminated the problem of playing after using the restart button, although I found that the game still sometimes killed the fifth character on the first round of playing. However, for some reason this issue seemed to go away with deployment/occurred less frequently. Also, the time doesn't read 0 when you die, and I didn't have time to return the obstacles to their original starting arrays at the end. Finally, I had multiple event listeners doubling up and forcing the character off the van and onto the road which should technically be picked up as a 'kill zone', but managed to resolve this issue. 
+This eliminated the problem of playing after using the restart button, although I found that the game still sometimes killed the fifth character on the first round of playing. However, for some reason this issue seemed to go away with deployment/occurred less frequently. Also, time not going to 0 when you die, not returning the obstacles to their original starting arrays. Also having multiple event listeners doubling up and forcing the character off the van and onto the road which should technically be picked up as a 'kill zone' ALSO TALK ABOUT THE GAME = TRUE/FALSE THING 
 
 ### Future features 
 - Local storage for a leaderboard 
