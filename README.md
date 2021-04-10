@@ -25,7 +25,7 @@ You can try it out using the link provided [here](https://emilyrandall1998.githu
 ## Approach
 ### Creating the grid 
 
-[Game Board](./images/p1gameboard.png)
+<!-- [Game Board](./images/p1gameboard.png) -->
 
 I created the grid mainly using JavaScript using a **div** created in the HTML file, which I made into a flex item within the flex container of the **body**. I use a for loop to generate each element (cell) of the grid, and within the for loop I created a 'cell' variable that creates the array of cell divs to sit within the grid div:
 
